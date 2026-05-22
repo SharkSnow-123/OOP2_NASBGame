@@ -29,6 +29,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
 
     private ArrayList<String> selectedCharacterNames = new ArrayList<>();
 
+    // Kini nga constructor mag-andam sa character selection para sa round 2.
     public RoundTwoFight(JFrame frame) {
         this.frame = frame;
         setLayout(null);
@@ -82,6 +83,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
 
         frame.addComponentListener(new ComponentAdapter() {
             @Override
+            // Kini nga function mo-adjust sa positions kung mausab ang window size.
             public void componentResized(ComponentEvent e) {
                 repositionComponents();
             }
@@ -90,6 +92,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(this::repositionComponents);
     }
 
+    // Kini nga function mohimo ug button para sa character.
     private JButton createCharacterButton(String text) {
         JButton btn = new JButton(text);
         btn.setFocusPainted(false);
@@ -101,6 +104,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
         return btn;
     }
 
+    // Kini nga function modala sa pagpili ug pag-deselect sa character.
     private void handleCharacterClick(JButton button, JLabel counterLabel) {
         String characterName = button.getText();
 
@@ -140,6 +144,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
                 new Color(0, 150, 0) : new Color(0, 100, 0));
     }
 
+    // Kini nga function mohimo sa moving stars sa background.
     private void generateStars(int count) {
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
@@ -149,6 +154,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa stars ug midterm monster preview.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -168,6 +174,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
     }
 
 
+    // Kini nga function mobutang sa title, buttons, monster, ug start button.
     private void repositionComponents() {
         int panelWidth = Math.max(getWidth(), 900);
         int panelHeight = Math.max(getHeight(), 600);
@@ -208,6 +215,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function mopalihok sa stars kada timer tick.
     public void actionPerformed(ActionEvent e) {
         Random rand = new Random();
         for (int i = 0; i < stars.size(); i++) {
@@ -221,6 +229,7 @@ public class RoundTwoFight extends JPanel implements ActionListener {
         repaint();
     }
 
+    // Kini nga function magsugod sa round 2 battle kung duha na ka character ang napili.
     private void startBattleAction() {
         if (selectedCharacterNames.size() != 2) {
             JOptionPane.showMessageDialog(this, "Please select exactly 2 characters!");

@@ -1,11 +1,13 @@
 package game.logic.characters;
 
 public final class CharacterInfo {
+    // Private constructor para utility class ra ni siya.
     private CharacterInfo() {
     }
 
     public static final String[] HERO_NAMES = {"Careza", "Cyrus", "Briar", "Dirk", "Brad"};
 
+    // Kini nga function mobalik ug short description sa napili nga character.
     public static String descriptionFor(String characterName) {
         return switch (characterName) {
             case "Careza" ->

@@ -16,6 +16,7 @@ public class EndPanel extends JPanel implements ActionListener {
     private JButton mainMenuButton;
     private JButton playAgainButton;
 
+    // Kini nga constructor mag-andam sa final/end screen.
     public EndPanel (JFrame frame) {
         this.frame = frame;
         setBackground(Color.BLACK);
@@ -41,6 +42,7 @@ public class EndPanel extends JPanel implements ActionListener {
 
     }
 
+    // Kini nga function mohimo ug styled button para sa end screen.
     private JButton createButton(String str){
 
         JButton button = new JButton(str);
@@ -53,6 +55,7 @@ public class EndPanel extends JPanel implements ActionListener {
         return button;
     }
 
+    // Kini nga function magsugod balik sa character selection.
     private void playAgain(){
 
         BattlePanel battlePanel = new BattlePanel(frame);
@@ -62,6 +65,7 @@ public class EndPanel extends JPanel implements ActionListener {
         battlePanel.requestFocusInWindow();
     }
 
+    // Kini nga function mohimo sa moving stars sa background.
     private void generateStars(int count) {
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
@@ -71,6 +75,7 @@ public class EndPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa final text, stars, ug buttons.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
@@ -91,6 +96,7 @@ public class EndPanel extends JPanel implements ActionListener {
         buttonPosition();
     }
 
+    // Kini nga function mobutang sa buttons sa sakto nga position.
     private void buttonPosition() {
 
         int w = getWidth();
@@ -103,6 +109,7 @@ public class EndPanel extends JPanel implements ActionListener {
 
     }
     @Override
+    // Kini nga function mopalihok sa stars kada timer tick.
     public void actionPerformed(ActionEvent e) {
         // Make stars move down for sidlak-sidlak effect
         Random rand = new Random();

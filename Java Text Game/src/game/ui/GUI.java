@@ -8,10 +8,12 @@ import java.util.Random;
 
 public class GUI {
 
+    // Kini ang main function nga mosugod sa whole app.
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GUI().createAndShowGUI());
     }
 
+    // Kini nga function mohimo sa main JFrame ug mopakita sa title screen.
     public void createAndShowGUI() {
         JFrame frame = new JFrame();
         frame.setSize(900, 600);
@@ -33,12 +35,14 @@ public class GUI {
         private int progress = 0;
         private int angle = 0;
 
+        // Kini nga constructor mag-andam sa loading screen.
         public LoadingPanel(JFrame frame) {
             this.frame = frame;
             setLayout(null);
             setBackground(Color.BLACK);
         }
 
+        // Kini nga function mosugod sa loading animation ug progress bar.
         public void startLoading() {
             timer = new Timer(50, e -> {
                 angle = (angle + 5) % 360;
@@ -51,6 +55,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function modrawing sa loading screen, stars, wheel, ug progress bar.
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
@@ -80,6 +85,7 @@ public class GUI {
             g.fillRect(barX, barY, (barWidth * progress) / 100, barHeight);
         }
 
+        // Kini nga function modrawing sa rotating loading wheel.
         private void drawLoadingWheel(Graphics g) {
             int width = getWidth();
             int height = getHeight();
@@ -114,6 +120,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function mopataas sa progress ug mobalhin sa character selection kung 100%.
         public void actionPerformed(ActionEvent e) {
             progress += 3;
 
@@ -143,6 +150,7 @@ public class GUI {
         private final ArrayList<Integer> starMovement = new ArrayList<>();
 
 
+        // Kini nga constructor mag-andam sa title/start page.
         public TitlePanel(JFrame frame) {
             this.frame = frame;
             setLayout(null);
@@ -162,6 +170,7 @@ public class GUI {
             // Kung mo-resize ang window, automatic re-center sa mga buttons
             addComponentListener(new ComponentAdapter() {
                 @Override
+                // Kini nga function mo-recenter sa buttons kung mausab ang window size.
                 public void componentResized(ComponentEvent e) {
                     centerComponents();
                 }
@@ -186,6 +195,7 @@ public class GUI {
             timer.start();
         }
 
+        // Kini nga function mohimo sa mga stars para sa title background.
         private void generateStars(int count){
 
             Random ran = new Random();
@@ -202,6 +212,7 @@ public class GUI {
             }
         }
 
+        // Kini nga function mohimo ug parehas nga style sa menu buttons.
         private JButton createButton(String text) {
             // Method para create ug uniform and neat ang style sa mga buttons para same sila tanan
             JButton button = new JButton(text);
@@ -214,6 +225,7 @@ public class GUI {
             return button;
         }
 
+        // Kini nga function mobutang sa menu buttons sa tunga sa screen.
         private void centerComponents() {
             // Function para i-center ang mga buttons sa tunga
             int panelWidth = getWidth();
@@ -228,6 +240,7 @@ public class GUI {
             quitButton.setLocation(x, yStart + 160);
         }
 
+        // Kini nga function mobalhin sa description/how-to-play page.
         private void goToHowToPlayPage() {
             // Kung i-click ang “How to Play” mo-move to next page which is naa didtu mga info sa duwa 🙂
             HowToPlayPanel nextPage = new HowToPlayPanel(frame);
@@ -238,6 +251,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function modrawing sa title text ug star background.
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
@@ -258,6 +272,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function mopalihok sa stars sa title page.
         public void actionPerformed(ActionEvent e) {
 
             Random ran = new Random();
@@ -294,6 +309,7 @@ public class GUI {
         private final ArrayList<Point> stars = new ArrayList<>();
         private final ArrayList<Integer> starMovement = new ArrayList<>();
 
+        // Kini nga constructor mag-andam sa description/how-to-play page.
         public HowToPlayPanel(JFrame frame) {
             this.frame = frame;
             setLayout(null);
@@ -367,6 +383,7 @@ public class GUI {
             // Kung i-resize ang window, mu-center gihapon ang content para kuan ba murag mobile view dimaguba format
             addComponentListener(new ComponentAdapter() {
                 @Override
+                // Kini nga function mo-adjust sa description content kung mausab ang window size.
                 public void componentResized(ComponentEvent e) {
                     centerContent();
                 }
@@ -377,6 +394,7 @@ public class GUI {
             timer.start();
         }
 
+        // Kini nga function mohimo sa stars para sa description page.
         private void generateStars(int count){
 
             Random ran = new Random();
@@ -394,6 +412,7 @@ public class GUI {
             }
         }
 
+        // Kini nga function mobutang sa title ug scroll text sa sakto nga position.
         private void centerContent() {
             // Ibutang sa tunga ang title ug text area dynamically
             int panelWidth = getWidth();
@@ -407,6 +426,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function modrawing sa star background sa description page.
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
@@ -418,6 +438,7 @@ public class GUI {
         }
 
         @Override
+        // Kini nga function mopalihok sa stars sa description page.
         public void actionPerformed(ActionEvent e) {
 
             Random ran = new Random();

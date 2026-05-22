@@ -30,6 +30,7 @@ public class BattlePanel extends JPanel implements ActionListener {
     private JPanel titlePanel;
     private JLabel characterInfoLabel;
 
+    // Kini nga constructor mag-andam sa character selection screen.
     public BattlePanel(JFrame frame) {
         this.frame = frame;
         setLayout(null);
@@ -90,6 +91,7 @@ public class BattlePanel extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(this::repositionComponents);
     }
 
+    // Kini nga function mohimo ug button para sa usa ka character.
     private JButton createCharacterButton(String text) {
         JButton btn = new JButton(text);
         btn.setFocusPainted(false);
@@ -101,6 +103,7 @@ public class BattlePanel extends JPanel implements ActionListener {
         return btn;
     }
 
+    // Kini nga function modala sa pagpili ug pag-deselect sa character.
     private void handleCharacterClick(JButton button, JLabel counterLabel) {
         String characterName = button.getText();
 
@@ -141,6 +144,7 @@ public class BattlePanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa stars ug monster preview sa selection screen.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -159,6 +163,7 @@ public class BattlePanel extends JPanel implements ActionListener {
     }
 
 
+    // Kini nga function mo-adjust sa position sa UI elements kung mausab ang window size.
     private void repositionComponents() {
         int panelWidth = Math.max(getWidth(), 900);
         int panelHeight = Math.max(getHeight(), 600);
@@ -199,11 +204,13 @@ public class BattlePanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function mo-update sa star animation kada timer tick.
     public void actionPerformed(ActionEvent e) {
         starField.update(getWidth(), getHeight());
         repaint();
     }
 
+    // Kini nga function magsugod sa battle kung duha na ka characters ang napili.
     private void startBattleAction() {
         if (selectedCharacterNames.size() != REQUIRED_CHARACTER_COUNT) {
             JOptionPane.showMessageDialog(this, "Please select exactly " + REQUIRED_CHARACTER_COUNT + " characters!");

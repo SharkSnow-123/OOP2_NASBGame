@@ -15,6 +15,7 @@ final class StarField {
     private final List<Point> stars = new ArrayList<>();
     private final List<Integer> speeds = new ArrayList<>();
 
+    // Kini nga constructor mohimo sa mga bituon nga gamiton sa background.
     StarField(int count) {
         for (int i = 0; i < count; i++) {
             stars.add(new Point(random.nextInt(DEFAULT_WIDTH), random.nextInt(DEFAULT_HEIGHT)));
@@ -22,6 +23,7 @@ final class StarField {
         }
     }
 
+    // Kini nga function mopalihok sa mga bituon paubos sa screen.
     void update(int width, int height) {
         int safeWidth = Math.max(1, width);
         int safeHeight = Math.max(1, height);
@@ -37,6 +39,7 @@ final class StarField {
         }
     }
 
+    // Kini nga function modrawing sa tanan bituon sa panel.
     void paint(Graphics2D graphics) {
         for (Point star : stars) {
             graphics.fillRect(star.x, star.y, STAR_SIZE, STAR_SIZE);

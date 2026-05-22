@@ -32,6 +32,7 @@ class FightTwo extends JPanel implements ActionListener {
 
     private JLabel battleTextLabel;
 
+    // Kini nga constructor mag-andam sa round 2 battle scene.
     public FightTwo(JFrame frame, ArrayList<Character> characters) {
         this.frame = frame;
         this.characters = characters;
@@ -48,6 +49,7 @@ class FightTwo extends JPanel implements ActionListener {
         battleTimer.start();
     }
 
+    // Kini nga function mohimo sa moving stars sa background.
     private void generateStars(int count) {
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
@@ -56,6 +58,7 @@ class FightTwo extends JPanel implements ActionListener {
         }
     }
 
+    // Kini nga function mag-layout sa round 2 battle UI.
     private void setupBattleUI() {
         // Top panel
         JPanel topPanel = new JPanel(new BorderLayout());
@@ -104,6 +107,7 @@ class FightTwo extends JPanel implements ActionListener {
         add(centerContainer, BorderLayout.CENTER);
     }
 
+    // Kini nga function mohimo sa panel para sa battle messages.
     private JPanel createTextPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
@@ -120,6 +124,7 @@ class FightTwo extends JPanel implements ActionListener {
         return panel;
     }
 
+    // Kini nga function mopakita ug temporary battle message.
     private void showBattleText(String text) {
         battleTextLabel.setText(text);
 
@@ -134,6 +139,7 @@ class FightTwo extends JPanel implements ActionListener {
         clearTimer.setRepeats(false);
     }
 
+    // Kini nga function mohimo sa team panel nga naay stats ug dialogue.
     private JPanel createCharacterPanel() {
         JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
         panel.setOpaque(false);
@@ -189,6 +195,7 @@ class FightTwo extends JPanel implements ActionListener {
         return panel;
     }
 
+    // Kini nga function mohimo sa midterm monster panel.
     private JPanel createMonsterPanel() {
         JPanel monsterPanel = new JPanel(new BorderLayout())
         {
@@ -234,6 +241,7 @@ class FightTwo extends JPanel implements ActionListener {
         return monsterPanel;
     }
 
+    // Kini nga function moload ug moscale sa monster image.
     private JLabel createMonsterImage(String monsterName) {
         JLabel imageLabel = new JLabel();
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -247,6 +255,7 @@ class FightTwo extends JPanel implements ActionListener {
     }
 
     //ang new buttons
+    // Kini nga function mohimo sa attack, skill, ug ultimate buttons.
     private JPanel createActionPanel()
     {
         JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
@@ -399,6 +408,7 @@ class FightTwo extends JPanel implements ActionListener {
         return panel;
     }
 
+    // Kini nga function moload ug moscale sa character image.
     private JLabel createImageForCharacter(String characterName) {
         JLabel imageLabel = new JLabel();
         imageLabel.setPreferredSize(new Dimension(80, 80));
@@ -422,6 +432,7 @@ class FightTwo extends JPanel implements ActionListener {
         return imageLabel;
     }
 
+    // Kini nga function mopakita sa dialogue base sa character ug action.
     private void showDialogue(String characterName, String action) {
         int charIndex = IntStream.range(0, characters.size()).filter(i -> characters.get(i).getName().equals(characterName)).findFirst().orElse(-1);
 
@@ -491,6 +502,7 @@ class FightTwo extends JPanel implements ActionListener {
         }
     }
 
+    // Kini nga function mo-update sa HP ug mo-check kung game over o proceed na.
     private void HP() {
         boolean allPlayersDead = true;
 
@@ -537,6 +549,7 @@ class FightTwo extends JPanel implements ActionListener {
         }
     }
 
+    // Kini nga function mo-update sa MP labels sa team.
     private void MP()
     {
         for(int i = 0; i < characters.size(); i++)
@@ -546,6 +559,7 @@ class FightTwo extends JPanel implements ActionListener {
         }
     }
 
+    // Kini nga function mobalhin sa game over screen.
     private void goToGameOver() {
         battleTimer.stop();
 
@@ -556,6 +570,7 @@ class FightTwo extends JPanel implements ActionListener {
     }
 
 
+    // Kini nga function mobalhin sa transition padulong round 3.
     private void goToRoundThree() {
         battleTimer.stop();
 
@@ -567,6 +582,7 @@ class FightTwo extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa black background ug stars.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -580,6 +596,7 @@ class FightTwo extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function mopalihok sa stars kada timer tick.
     public void actionPerformed(ActionEvent e) {
         Random rand = new Random();
         for (int i = 0; i < stars.size(); i++) {

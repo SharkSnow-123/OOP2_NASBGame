@@ -16,6 +16,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
     private JButton proceedButton;
     private JButton mainMenuButton;
 
+    // Kini nga constructor mag-andam sa transition screen padulong round 3.
     public  RoundThreePanel (JFrame frame) {
         this.frame = frame;
         setBackground(Color.BLACK);
@@ -46,6 +47,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
 
         // Listen for resize event to reposition buttons
         frame.addComponentListener(new ComponentAdapter() {
+            // Kini nga function mo-reposition sa buttons kung mausab ang window size.
             public void componentResized(ComponentEvent e) {
                 repositionButtons();
             }
@@ -55,6 +57,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(this::repositionButtons);
     }
 
+    // Kini nga function mohimo ug styled transition button.
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFocusPainted(false);
@@ -66,6 +69,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
         return button;
     }
 
+    // Kini nga function mohimo sa moving stars sa background.
     private void generateStars(int count) {
         Random rand = new Random();
         int w = frame.getWidth() > 0 ? frame.getWidth() : 900;
@@ -78,6 +82,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa victory message, stars, ug buttons.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
@@ -100,6 +105,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function mopalihok sa stars kada timer tick.
     public void actionPerformed(ActionEvent e) {
         Random rand = new Random();
         for (int i = 0; i < stars.size(); i++) {
@@ -113,6 +119,7 @@ public class RoundThreePanel extends JPanel implements ActionListener {
         repaint();
     }
 
+    // Kini nga function mobutang sa proceed ug main menu buttons sa tunga.
     private void repositionButtons() {
         int w = getWidth();
         int h = getHeight();

@@ -21,11 +21,13 @@ public abstract class Skill {
     public final String name;
     protected int MPcost;
 
+    // Kini nga constructor mag-set sa skill name ug MP cost.
     public Skill(String name, int mpCost) {
         this.name = name;
         this.MPcost = mpCost;
     }
 
+    // Kini nga function mao ang default gamit sa skill kung walay special effect.
     public ActionResult use(Character user, Character target) {
         ActionResult check = canUse(user);
         if (!check.isSuccess()) {
@@ -35,10 +37,12 @@ public abstract class Skill {
         return ActionResult.effect(user.name + " used " + name + ".");
     }
 
+    // Kini nga function mokuha kung pila ka MP ang kinahanglan sa skill.
     public int getMpCost() {
         return MPcost;
     }
 
+    // Kini nga function mo-check kung pwede ba mogamit ug skill ang character.
     protected ActionResult canUse(Character user) {
         if (user.isDown()) {
             return ActionResult.failure(user.name + " is down!");
@@ -51,6 +55,7 @@ public abstract class Skill {
         return ActionResult.effect("");
     }
 
+    // Kini nga function mokompyut ug damage, miss chance, ug critical hit.
     protected ActionResult damageWithChance(Character user, Character target, int baseDamage, double hitChance) {
         ActionResult check = canUse(user);
         if (!check.isSuccess()) {
@@ -79,11 +84,13 @@ public abstract class Skill {
     }
 
     public static class Attack extends Skill {
+        // Kini nga constructor mohimo sa basic attack skill.
         public Attack() {
             super("Attack", 0);
         }
 
         @Override
+        // Kini nga function mogamit sa basic attack ug mobawi ug gamay nga MP.
         public ActionResult use(Character user, Character target) {
             ActionResult result = damageWithChance(user, target, user.ATK - (target.DEF / 2), BASIC_HIT_CHANCE);
             if (result.isSuccess()) {
@@ -94,11 +101,13 @@ public abstract class Skill {
     }
 
     public static class TSquare extends Skill {
+        // Kini nga constructor mohimo sa T Square skill.
         public TSquare() {
             super("TSquare", 20);
         }
 
         @Override
+        // Kini nga function mogamit sa defense-based attack ni Careza.
         public ActionResult use(Character user, Character target) {
             int damage = user.ATK + (user.DEF / 5) - (target.DEF / 2);
             return damageWithChance(user, target, damage, SKILL_HIT_CHANCE);
@@ -106,11 +115,13 @@ public abstract class Skill {
     }
 
     public static class SuccessfullFloorPlan extends Skill {
+        // Kini nga constructor mohimo sa ultimate ni Careza.
         public SuccessfullFloorPlan() {
             super("SuccessfullFloorPlan", 90);
         }
 
         @Override
+        // Kini nga function modeal ug damage, modugang DEF, ug moheal kang Careza.
         public ActionResult use(Character user, Character target) {
             int damage = user.ATK + (user.DEF / 4) - (target.DEF / 2);
             ActionResult result = damageWithChance(user, target, damage, ULTIMATE_HIT_CHANCE);
@@ -129,11 +140,13 @@ public abstract class Skill {
     }
 
     public static class FirstAidKit extends Skill {
+        // Kini nga constructor mohimo sa healing skill ni Cyrus.
         public FirstAidKit() {
             super("FirstAidKit", 20);
         }
 
         @Override
+        // Kini nga function moheal sa ally nga target.
         public ActionResult use(Character user, Character target) {
             ActionResult check = canUse(user);
             if (!check.isSuccess()) {
@@ -147,11 +160,13 @@ public abstract class Skill {
     }
 
     public static class SyringeRevive extends Skill {
+        // Kini nga constructor mohimo sa ultimate support skill ni Cyrus.
         public SyringeRevive() {
             super("SyringeRevive", 90);
         }
 
         @Override
+        // Kini nga function mopataas ug max HP sa user ug target.
         public ActionResult use(Character user, Character target) {
             ActionResult check = canUse(user);
             if (!check.isSuccess()) {
@@ -166,22 +181,26 @@ public abstract class Skill {
     }
 
     public static class CellPhone extends Skill {
+        // Kini nga constructor mohimo sa CellPhone attack skill.
         public CellPhone() {
             super("CellPhone", 20);
         }
 
         @Override
+        // Kini nga function modeal ug attack-based damage gamit ang CellPhone.
         public ActionResult use(Character user, Character target) {
             return damageWithChance(user, target, (user.ATK / 2) + 20, SKILL_HIT_CHANCE);
         }
     }
 
     public static class Transformation extends Skill {
+        // Kini nga constructor mohimo sa transformation ultimate ni Briar.
         public Transformation() {
             super("Transformation", 90);
         }
 
         @Override
+        // Kini nga function mopakusog sa ATK, DEF, ug HP sa user.
         public ActionResult use(Character user, Character target) {
             ActionResult check = canUse(user);
             if (!check.isSuccess()) {
@@ -197,22 +216,26 @@ public abstract class Skill {
     }
 
     public static class InfoDump extends Skill {
+        // Kini nga constructor mohimo sa intellect-based InfoDump skill.
         public InfoDump() {
             super("InfoDump", 50);
         }
 
         @Override
+        // Kini nga function modeal ug INT-based damage sa target.
         public ActionResult use(Character user, Character target) {
             return damageWithChance(user, target, (user.INT + 20) - (target.DEF / 2), SKILL_HIT_CHANCE);
         }
     }
 
     public static class HardHats extends Skill {
+        // Kini nga constructor mohimo sa HardHats ultimate ni Dirk.
         public HardHats() {
             super("HardHats", 90);
         }
 
         @Override
+        // Kini nga function modeal ug damage, modugang DEF sa user, ug mokunhod sa DEF sa enemy.
         public ActionResult use(Character user, Character target) {
             ActionResult result = damageWithChance(user, target, user.INT, ULTIMATE_HIT_CHANCE);
             if (result.isHit()) {
@@ -224,22 +247,26 @@ public abstract class Skill {
     }
 
     public static class PresidentBook extends Skill {
+        // Kini nga constructor mohimo sa wisdom-based PresidentBook skill.
         public PresidentBook() {
             super("PresidentBook", 20);
         }
 
         @Override
+        // Kini nga function modeal ug WIS-based damage sa target.
         public ActionResult use(Character user, Character target) {
             return damageWithChance(user, target, user.WIS - (target.DEF / 2), SKILL_HIT_CHANCE);
         }
     }
 
     public static class ExistentialCrisis extends Skill {
+        // Kini nga constructor mohimo sa ultimate mental attack ni Brad.
         public ExistentialCrisis() {
             super("ExistentialCrisis", 90);
         }
 
         @Override
+        // Kini nga function modeal ug kusog nga WIS-based ultimate damage.
         public ActionResult use(Character user, Character target) {
             return damageWithChance(user, target, (user.WIS * 2) - target.DEF, ULTIMATE_HIT_CHANCE);
         }

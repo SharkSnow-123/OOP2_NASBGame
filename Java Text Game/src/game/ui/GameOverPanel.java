@@ -15,6 +15,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     private JButton mainMenuButton;
     private JButton playAgainButton;
 
+    // Kini nga constructor mag-andam sa game over screen.
     public GameOverPanel(JFrame frame) {
         this.frame = frame;
         setBackground(Color.BLACK);
@@ -38,6 +39,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         starTimer.start();
     }
 
+    // Kini nga function mohimo ug styled button para sa game over screen.
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFocusPainted(false);
@@ -49,6 +51,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         return button;
     }
 
+    // Kini nga function magsugod balik sa character selection.
     private void playAgain() {
         // Restart game by going back to BattlePanel (or wherever your game starts)
         BattlePanel battlePanel = new BattlePanel(frame);
@@ -58,6 +61,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         battlePanel.requestFocusInWindow();
     }
 
+    // Kini nga function mohimo sa moving stars sa background.
     private void generateStars(int count) {
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
@@ -67,6 +71,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function modrawing sa game over text, stars, ug buttons.
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
@@ -87,6 +92,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
         positionButtons();
     }
 
+    // Kini nga function mobutang sa buttons sa tunga sa screen.
     private void positionButtons() {
         int w = getWidth();
         int h = getHeight();
@@ -98,6 +104,7 @@ public class GameOverPanel extends JPanel implements ActionListener {
     }
 
     @Override
+    // Kini nga function mopalihok sa stars kada timer tick.
     public void actionPerformed(ActionEvent e) {
         // Move stars down for twinkling effect
         Random rand = new Random();
