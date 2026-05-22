@@ -11,15 +11,15 @@ public final class CharacterInfo {
     public static String descriptionFor(String characterName) {
         return switch (characterName) {
             case "Careza" ->
-                    "Careza (TUITION PAYER) - HIGHEST DEFENSE<br>Skill 1: T SQUARE - Uses a T square for offense<br>ULTIMATE: SUCCESSFUL FLOOR PLAN - Summons a protective barrier";
+                    "Careza (TUITION PAYER) - HIGHEST DEFENSE<br>Attack Damage: 33-45<br>Skill 1: T SQUARE - Uses a T square for offense<br>ULTIMATE: SUCCESSFUL FLOOR PLAN - Summons a protective barrier";
             case "Cyrus" ->
-                    "Cyrus (NAS MDC) - HIGHEST HP<br>Skill 1: FIRST AID KIT - Heals a single ally<br>ULTIMATE: SYRINGE REVIVE - Revives a downed ally";
+                    "Cyrus (NAS MDC) - HIGHEST HP<br>Attack Damage: 28-40<br>Skill 1: FIRST AID KIT - Heals a single ally<br>ULTIMATE: SYRINGE REVIVE - Revives a downed ally";
             case "Briar" ->
-                    "Briar (NAS CPE) - HIGHEST ATTACK<br>Skill 1: CELLPHONE - Fires electric byte strikes<br>ULTIMATE: TRANSFORMATION - Boosts armor and power";
+                    "Briar (NAS CPE) - HIGHEST ATTACK<br>Attack Damage: 42-58<br>Skill 1: CELLPHONE - Fires electric byte strikes<br>ULTIMATE: TRANSFORMATION - Boosts armor and power";
             case "Dirk" ->
-                    "Dirk (NAS CE) - HIGHEST INTELLECT<br>Skill 1: INFO DUMP - Confuses enemy, dealing INT damage<br>ULTIMATE: HARD HATS - Reduces enemy defence";
+                    "Dirk (NAS CE) - HIGHEST INTELLECT<br>Attack Damage: 31-47<br>Skill 1: INFO DUMP - Confuses enemy, dealing INT damage<br>ULTIMATE: HARD HATS - Reduces enemy defence";
             case "Brad" ->
-                    "Brad (NAS PRESIDENT) - HIGHEST WISDOM<br>Skill 1: NAS PRESIDENT BOOK - Confuses enemies with knowledge<br>ULTIMATE: EXISTENTIAL CRISIS - Heavy Mental attack";
+                    "Brad (NAS PRESIDENT) - HIGHEST WISDOM<br>Attack Damage: 35-50<br>Skill 1: NAS PRESIDENT BOOK - Confuses enemies with knowledge<br>ULTIMATE: EXISTENTIAL CRISIS - Heavy Mental attack";
             default -> "";
         };
     }

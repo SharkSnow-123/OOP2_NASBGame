@@ -83,6 +83,13 @@ public abstract class Skill {
         return ActionResult.hit(damageDone, critical, message);
     }
 
+    // Kini nga function mopili ug random basic attack damage sulod sa min-max range sa character.
+    protected int rollAttackDamage(Character user) {
+        int minDamage = user.getMinAttackDamage();
+        int maxDamage = user.getMaxAttackDamage();
+        return minDamage + RANDOM.nextInt(maxDamage - minDamage + 1);
+    }
+
     public static class Attack extends Skill {
         // Kini nga constructor mohimo sa basic attack skill.
         public Attack() {
@@ -92,7 +99,7 @@ public abstract class Skill {
         @Override
         // Kini nga function mogamit sa basic attack ug mobawi ug gamay nga MP.
         public ActionResult use(Character user, Character target) {
-            ActionResult result = damageWithChance(user, target, user.ATK - (target.DEF / 2), BASIC_HIT_CHANCE);
+            ActionResult result = damageWithChance(user, target, rollAttackDamage(user), BASIC_HIT_CHANCE);
             if (result.isSuccess()) {
                 user.restoreMp(BASIC_ATTACK_MP_GAIN);
             }
