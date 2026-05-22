@@ -65,7 +65,8 @@ public abstract class Skill {
         user.spendMp(MPcost);
 
         if (RANDOM.nextDouble() > hitChance) {
-            return ActionResult.miss(user.name + "'s " + name + " missed!");
+            return ActionResult.miss(user.name + "'s " + name + " missed! MP used: " + MPcost
+                    + ". HP deducted: 0.");
         }
 
         boolean critical = RANDOM.nextDouble() < CRITICAL_CHANCE;
@@ -75,7 +76,8 @@ public abstract class Skill {
         }
 
         int damageDone = target.takeDamage(finalDamage);
-        String message = user.name + "'s " + name + " dealt " + damageDone + " damage.";
+        String message = user.name + "'s " + name + " used " + MPcost + " MP. "
+                + target.name + " lost " + damageDone + " HP.";
         if (critical) {
             message = "Critical hit! " + message;
         }
@@ -162,7 +164,8 @@ public abstract class Skill {
 
             user.spendMp(MPcost);
             int healing = target.heal(user.maxHP / 4);
-            return ActionResult.heal(healing, user.name + " healed " + target.name + " for " + healing + " HP.");
+            return ActionResult.heal(healing, user.name + " used " + MPcost + " MP. "
+                    + target.name + " recovered " + healing + " HP. HP deducted: 0.");
         }
     }
 
@@ -183,7 +186,8 @@ public abstract class Skill {
             user.spendMp(MPcost);
             user.increaseMaxHp(50);
             target.increaseMaxHp(50);
-            return ActionResult.heal(100, user.name + " restored the team with SyringeRevive.");
+            return ActionResult.heal(100, user.name + " used " + MPcost
+                    + " MP. The team gained 50 max HP each. HP deducted: 0.");
         }
     }
 
@@ -218,7 +222,8 @@ public abstract class Skill {
             user.ATK *= 2;
             user.DEF += 30;
             user.increaseMaxHp(20);
-            return ActionResult.effect(user.name + " transformed and raised ATK, DEF, and HP.");
+            return ActionResult.effect(user.name + " used " + MPcost
+                    + " MP. ATK, DEF, and HP increased. HP deducted: 0.");
         }
     }
 
