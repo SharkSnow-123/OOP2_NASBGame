@@ -8,18 +8,21 @@ import game.logic.characters.CharacterInfo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BattlePanel extends JPanel implements ActionListener {
 
-    final ArrayList<Character> chosenCharacters = new ArrayList<>();
+    private static final int REQUIRED_CHARACTER_COUNT = 2;
+    private static final int STAR_COUNT = 180;
 
-    private JFrame frame;
+    private final ArrayList<Character> chosenCharacters = new ArrayList<>();
+    private final JFrame frame;
     private final ArrayList<JButton> selectedCharacters = new ArrayList<>();
     private final ArrayList<JButton> characterButtons = new ArrayList<>();
-    private final ArrayList<Point> stars = new ArrayList<>();
-    private final ArrayList<Integer> starSpeeds = new ArrayList<>();
+    private final StarField starField = new StarField(STAR_COUNT);
+    private final List<String> selectedCharacterNames = new ArrayList<>();
 
     private JButton startBattleButton;
     private javax.swing.Timer starTimer;
@@ -27,14 +30,11 @@ public class BattlePanel extends JPanel implements ActionListener {
     private JPanel titlePanel;
     private JLabel characterInfoLabel;
 
-    private ArrayList<String> selectedCharacterNames = new ArrayList<>();
-
     public BattlePanel(JFrame frame) {
         this.frame = frame;
         setLayout(null);
         setBackground(Color.BLACK);
 
-        generateStars(180);
         starTimer = new javax.swing.Timer(50, this);
         starTimer.start();
 
@@ -50,7 +50,7 @@ public class BattlePanel extends JPanel implements ActionListener {
         titleLabel.setBounds(40, 25, 700, 30);
         titlePanel.add(titleLabel);
 
-        JLabel counterLabel = new JLabel("Selected: 0/2");
+        JLabel counterLabel = new JLabel("Selected: 0/" + REQUIRED_CHARACTER_COUNT);
         counterLabel.setFont(new Font("Monospaced", Font.PLAIN, 14));
         counterLabel.setForeground(Color.GREEN);
         counterLabel.setBounds(40, 55, 200, 20);
@@ -116,8 +116,8 @@ public class BattlePanel extends JPanel implements ActionListener {
             chosenCharacters.removeIf(c -> c.getName().equals(characterName));
 
         } else {
-            if (selectedCharacters.size() >= 2) {
-                JOptionPane.showMessageDialog(this, "You can only select 2 characters!");
+            if (selectedCharacters.size() >= REQUIRED_CHARACTER_COUNT) {
+                JOptionPane.showMessageDialog(this, "You can only select " + REQUIRED_CHARACTER_COUNT + " characters!");
                 return;
             }
 
@@ -134,18 +134,10 @@ public class BattlePanel extends JPanel implements ActionListener {
         }
 
         // Update counter
-        counterLabel.setText("Selected: " + selectedCharacters.size() + "/2");
-        startBattleButton.setEnabled(selectedCharacters.size() == 2);
-        startBattleButton.setBackground(selectedCharacters.size() == 2 ?
+        counterLabel.setText("Selected: " + selectedCharacters.size() + "/" + REQUIRED_CHARACTER_COUNT);
+        startBattleButton.setEnabled(selectedCharacters.size() == REQUIRED_CHARACTER_COUNT);
+        startBattleButton.setBackground(selectedCharacters.size() == REQUIRED_CHARACTER_COUNT ?
                 new Color(0, 150, 0) : new Color(0, 100, 0));
-    }
-
-    private void generateStars(int count) {
-        Random rand = new Random();
-        for (int i = 0; i < count; i++) {
-            stars.add(new Point(rand.nextInt(900), rand.nextInt(600)));
-            starSpeeds.add(1 + rand.nextInt(3));
-        }
     }
 
     @Override
@@ -153,9 +145,8 @@ public class BattlePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        // Stars
         g2d.setColor(Color.WHITE);
-        for (Point star : stars) g2d.fillRect(star.x, star.y, 2, 2);
+        starField.paint(g2d);
 
         if (monsterBounds == null) return;
 
@@ -209,29 +200,18 @@ public class BattlePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Random rand = new Random();
-        for (int i = 0; i < stars.size(); i++) {
-            Point star = stars.get(i);
-            star.y += starSpeeds.get(i);
-            if (star.y > getHeight()) {
-                star.y = 0;
-                star.x = rand.nextInt(getWidth());
-            }
-        }
+        starField.update(getWidth(), getHeight());
         repaint();
     }
 
     private void startBattleAction() {
-        if (selectedCharacterNames.size() != 2) {
-            JOptionPane.showMessageDialog(this, "Please select exactly 2 characters!");
+        if (selectedCharacterNames.size() != REQUIRED_CHARACTER_COUNT) {
+            JOptionPane.showMessageDialog(this, "Please select exactly " + REQUIRED_CHARACTER_COUNT + " characters!");
             return;
         }
 
-        // Transition sa battle scene
         BattleScenePanel battleScene = new BattleScenePanel(frame, chosenCharacters);
-        frame.setContentPane(battleScene);
-        frame.revalidate();
-        frame.repaint();
+        GameNavigator.show(frame, battleScene);
     }
 
 }

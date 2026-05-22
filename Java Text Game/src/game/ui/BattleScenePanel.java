@@ -14,11 +14,14 @@ import java.util.stream.IntStream;
 
 
 class BattleScenePanel extends JPanel implements ActionListener {
-    private JFrame frame;
-    private ArrayList<Character> characters;
+    private static final int STAR_COUNT = 150;
+    private static final int DIALOGUE_DURATION_MS = 3000;
+
+    private final JFrame frame;
+    private final ArrayList<Character> characters;
+    private final StarField starField = new StarField(STAR_COUNT);
+
     private javax.swing.Timer battleTimer;
-    private final ArrayList<Point> stars = new ArrayList<>();
-    private final ArrayList<Integer> starSpeeds = new ArrayList<>();
 
     private JLabel[] characterDialogueLabels;
     private JLabel monsterDialogueLabel;
@@ -40,19 +43,10 @@ class BattleScenePanel extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
-        generateStars(150);
         setupBattleUI();
 
         battleTimer = new javax.swing.Timer(50, this);
         battleTimer.start();
-    }
-
-    private void generateStars(int count) {
-        Random rand = new Random();
-        for (int i = 0; i < count; i++) {
-            stars.add(new Point(rand.nextInt(900), rand.nextInt(600)));
-            starSpeeds.add(1 + rand.nextInt(3));
-        }
     }
 
     private void setupBattleUI() {
@@ -71,12 +65,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
         backButton.setBackground(new Color(60, 60, 60));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.addActionListener(e -> {
-            BattlePanel battlePanel = new BattlePanel(frame);
-            frame.setContentPane(battlePanel);
-            frame.revalidate();
-            frame.repaint();
-        });
+        backButton.addActionListener(e -> GameNavigator.showCharacterSelection(frame));
         topPanel.add(backButton, BorderLayout.EAST);
         add(topPanel, BorderLayout.NORTH);
 
@@ -122,7 +111,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
     private void showBattleText(String text) {
         battleTextLabel.setText(text);
 
-        javax.swing.Timer clearTimer = new javax.swing.Timer(3000, new ActionListener() {
+        javax.swing.Timer clearTimer = new javax.swing.Timer(DIALOGUE_DURATION_MS, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 battleTextLabel.setText("");
@@ -272,17 +261,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
             attackBtn.setPreferredSize(new Dimension(100, 35));
             attackBtn.addActionListener(e ->
             {
-                if (c.HP > 0) {
-                    ActionResult result = turnSystem.ActionChosen(c, monster, TurnSystem.BasicAttack);
-                    int damage = result.getDamage();
-
-                    HP();
-                    MP();
-                    showDialogue(c.getName(), "ATTACK");
-                    showBattleText(result.getMessage());
-                } else {
-                    showBattleText(c.getName() + " is down!");
-                }
+                performAction(c, TurnSystem.BasicAttack, "ATTACK");
             });
             charActionPanel.add(attackBtn);
 
@@ -293,50 +272,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
             Skill.setPreferredSize(new Dimension(100, 35));
             Skill.addActionListener(e ->
             {
-                if(c.name.equals("Cyrus"))
-                {
-                    Character target = null;
-                    for(Character ally: characters)
-                    {
-                        if(ally != c)
-                        {
-                            target = ally;
-                            break;
-                        }
-                    }
-
-                    if (c.MP >= c.skill1.getMpCost() && c.HP > 0) {
-
-                        ActionResult result = turnSystem.ActionChosen(c, target, c.skill1);
-                        HP();
-                        MP();
-
-                        int healAmount = result.getHealing();
-
-                        showDialogue(c.getName(), "SKILL");
-                        showBattleText(result.getMessage());
-                    } else if (c.HP <= 0) {
-                        showBattleText(c.getName() + " is down!");
-                    } else {
-                        showBattleText("Not enough MP!");
-                    }
-                }
-                else {
-                    if (c.MP >= c.skill1.getMpCost() && c.HP > 0) {
-
-                        ActionResult result = turnSystem.ActionChosen(c, monster, c.skill1);
-                        int damage = result.getDamage();
-
-                        HP();
-                        MP();
-                        showDialogue(c.getName(), "SKILL");
-                        showBattleText(result.getMessage());
-                    } else if (c.HP <= 0) {
-                        showBattleText((c.getName() + " is down!"));
-                    } else {
-                        showBattleText("Not enough MP!");
-                    }
-                }
+                performAction(c, c.skill1, "SKILL");
             });
             charActionPanel.add(Skill);
 
@@ -347,48 +283,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
             ultBtn.setPreferredSize(new Dimension(100, 35));
             ultBtn.addActionListener(e ->
             {
-                if(c.name.equals("Cyrus"))
-                {
-                    Character target = null;
-                    for(Character ally: characters)
-                    {
-                        if(ally != c)
-                        {
-                            target = ally;
-                            break;
-                        }
-                    }
-
-                    if (c.MP >= c.Ultimate.getMpCost() && c.HP > 0) {
-
-                        ActionResult result = turnSystem.ActionChosen(c, target, c.Ultimate);
-                        int healAmount = result.getHealing();
-                        HP();
-                        MP();
-                        showDialogue(c.getName(), "ULTIMATE");
-                        showBattleText(result.getMessage());
-                    } else if (c.HP <= 0) {
-                        showBattleText(c.getName() + " is down!");
-                    } else {
-                        showBattleText("Not enough MP!");
-                    }
-                }
-                else {
-                    if (c.MP >= c.Ultimate.getMpCost() && c.HP > 0) {
-
-                        ActionResult result = turnSystem.ActionChosen(c, monster, c.Ultimate);
-                        int damage = result.getDamage();
-
-                        HP();
-                        MP();
-                        showDialogue(c.getName(), "ULTIMATE");
-                        showBattleText(result.getMessage());
-                    } else if (c.HP <= 0) {
-                        showBattleText(c.getName() + " is down!");
-                    } else {
-                        showBattleText("Not enough MP!");
-                    }
-                }
+                performAction(c, c.Ultimate, "ULTIMATE");
             });
             charActionPanel.add(ultBtn);
 
@@ -396,6 +291,39 @@ class BattleScenePanel extends JPanel implements ActionListener {
         }
 
         return panel;
+    }
+
+    private void performAction(Character actor, game.logic.skills.Skill skill, String actionName) {
+        if (actor.isDown()) {
+            showBattleText(actor.getName() + " is down!");
+            return;
+        }
+
+        if (!actor.hasEnoughMp(skill.getMpCost())) {
+            showBattleText("Not enough MP!");
+            return;
+        }
+
+        Character target = targetFor(actor);
+        ActionResult result = turnSystem.ActionChosen(actor, target, skill);
+        HP();
+        MP();
+        showDialogue(actor.getName(), actionName);
+        showBattleText(result.getMessage());
+    }
+
+    private Character targetFor(Character actor) {
+        if (!actor.getName().equals("Cyrus")) {
+            return monster;
+        }
+
+        for (Character ally : characters) {
+            if (ally != actor) {
+                return ally;
+            }
+        }
+
+        return actor;
     }
 
     private JLabel createImageForCharacter(String characterName) {
@@ -479,7 +407,7 @@ class BattleScenePanel extends JPanel implements ActionListener {
             characterDialogueLabels[charIndex].setText(dialogue);
             monsterDialogueLabel.setText(monsterSay);
 
-            new javax.swing.Timer(3000, e -> {
+            new javax.swing.Timer(DIALOGUE_DURATION_MS, e -> {
                 characterDialogueLabels[charIndex].setText("");
                 monsterDialogueLabel.setText("");
                 ((javax.swing.Timer)e.getSource()).stop();
@@ -578,21 +506,12 @@ class BattleScenePanel extends JPanel implements ActionListener {
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         g2d.setColor(Color.WHITE);
-        for (Point star : stars)
-            g2d.fillRect(star.x, star.y, 2, 2);
+        starField.paint(g2d);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Random rand = new Random();
-        for (int i = 0; i < stars.size(); i++) {
-            Point star = stars.get(i);
-            star.y += starSpeeds.get(i);
-            if (star.y > getHeight()) {
-                star.y = 0;
-                star.x = rand.nextInt(getWidth());
-            }
-        }
+        starField.update(getWidth(), getHeight());
         repaint();
     }
 }

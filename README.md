@@ -50,6 +50,13 @@ Java Text Game/src/game/ui/GUI.java
 2. Make sure the `src` folder is marked as a source root.
 3. Run `game.ui.GUI`.
 
+## Run in VS Code
+
+1. Open the `Java Text Game` folder in VS Code.
+2. Install the Java Extension Pack if VS Code asks for Java support.
+3. Open the Run and Debug panel.
+4. Choose `Run NASB Game`.
+
 ## Run from the Command Line
 
 From the repository root:
