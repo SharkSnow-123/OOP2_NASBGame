@@ -13,13 +13,13 @@ NASB Game is a Java Swing turn-based battle game about the Non Academic School B
 
 ## Characters
 
-| Character | Role | Strength | Skill | Ultimate |
-| --- | --- | --- | --- | --- |
-| Careza | Tuition Payer | Defense | T Square | Successful Floor Plan |
-| Cyrus | NAS MDC | HP | First Aid Kit | Syringe Revive |
-| Briar | NAS CPE | Attack | Cellphone | Transformation |
-| Dirk | NAS CE | Intellect | Info Dump | Hard Hats |
-| Brad | NAS President | Wisdom | President Book | Existential Crisis |
+| Character | Role          | Strength  | Skill           | Ultimate              |
+| --------- | ------------- | --------- | --------------- | --------------------- |
+| Careza    | Tuition Payer | Defense   | T Square        | Successful Floor Plan |
+| Cyrus     | NAS MDC       | HP        | First Aid Kit   | Syringe Revive        |
+| Briar     | NAS CPE       | Attack    | Cellphone       | Transformation        |
+| Dirk      | NAS CE        | Intellect | Info Dump       | Hard Hats             |
+| Brad      | NAS President | Wisdom    | President Book  | Existential Crisis    |
 
 ## Project Structure
 
@@ -49,13 +49,6 @@ Java Text Game/src/game/ui/GUI.java
 1. Open the `Java Text Game` folder as the project.
 2. Make sure the `src` folder is marked as a source root.
 3. Run `game.ui.GUI`.
-
-## Run in VS Code
-
-1. Open the `Java Text Game` folder in VS Code.
-2. Install the Java Extension Pack if VS Code asks for Java support.
-3. Open the Run and Debug panel.
-4. Choose `Run NASB Game`.
 
 ## Run from the Command Line
 
