@@ -8,6 +8,8 @@ public abstract class Character
 
     public final String name;
     public int HP, MP, DEF, ATK, maxHP, maxMP, WIS, INT;
+    private final int minAttackDamage;
+    private final int maxAttackDamage;
     public static int baseHP = 100, baseMP = 100, baseDEF = 50, baseATK = 50, baseWIS = 50, baseINT = 50;
 
     public Skill attack, skill1, Ultimate;
@@ -16,6 +18,13 @@ public abstract class Character
     // Kini nga constructor mag-set sa basic stats ug skills sa usa ka character.
     public Character(String name, int HP, int MP, int DEF, int ATK, int WIS, int INT, Skill skill1, Skill Ultimate)
     {
+        this(name, HP, MP, DEF, ATK, WIS, INT, 33, 45, skill1, Ultimate);
+    }
+
+    // Kini nga constructor mag-set sa stats, attack damage range, ug skills sa character.
+    public Character(String name, int HP, int MP, int DEF, int ATK, int WIS, int INT,
+                     int minAttackDamage, int maxAttackDamage, Skill skill1, Skill Ultimate)
+    {
         this.name = name;
         this.HP = HP;
         this.MP = MP;
@@ -23,6 +32,8 @@ public abstract class Character
         this.ATK = ATK;
         this.WIS = WIS;
         this.INT = INT;
+        this.minAttackDamage = Math.max(0, Math.min(minAttackDamage, maxAttackDamage));
+        this.maxAttackDamage = Math.max(this.minAttackDamage, maxAttackDamage);
         maxHP = HP;
         maxMP = MP;
 
@@ -35,6 +46,16 @@ public abstract class Character
     public String getName()
     {
         return name;
+    }
+
+    // Kini nga function mokuha sa pinaka-gamay nga basic attack damage.
+    public int getMinAttackDamage() {
+        return minAttackDamage;
+    }
+
+    // Kini nga function mokuha sa pinaka-dako nga basic attack damage.
+    public int getMaxAttackDamage() {
+        return maxAttackDamage;
     }
 
     // Kini nga function mo-check kung namatay/down na ang character.
@@ -90,7 +111,8 @@ public abstract class Character
     {
         // Kini nga constructor mohimo kang Careza nga taas ug defense.
         public Careza() {
-            super("Careza", 150, baseMP, 100, baseATK, baseWIS, baseINT, new Skill.TSquare(), new Skill.SuccessfullFloorPlan());
+            super("Careza", 150, baseMP, 100, baseATK, baseWIS, baseINT, 33, 45,
+                    new Skill.TSquare(), new Skill.SuccessfullFloorPlan());
         }
 
     }
@@ -100,7 +122,8 @@ public abstract class Character
         // Kini nga constructor mohimo kang Cyrus nga taas ug HP.
         public Cyrus()
         {
-            super("Cyrus", 200, baseMP, baseDEF, baseATK, baseWIS, baseINT, new Skill.FirstAidKit(), new Skill.SyringeRevive());
+            super("Cyrus", 200, baseMP, baseDEF, baseATK, baseWIS, baseINT, 28, 40,
+                    new Skill.FirstAidKit(), new Skill.SyringeRevive());
         }
     }
 
@@ -109,7 +132,8 @@ public abstract class Character
         // Kini nga constructor mohimo kang Briar nga taas ug attack.
         public Briar()
         {
-            super("Briar", baseHP, baseMP, baseDEF, 100, baseWIS, baseINT, new Skill.CellPhone(), new Skill.Transformation());
+            super("Briar", baseHP, baseMP, baseDEF, 100, baseWIS, baseINT, 42, 58,
+                    new Skill.CellPhone(), new Skill.Transformation());
         }
     }
 
@@ -118,7 +142,8 @@ public abstract class Character
         // Kini nga constructor mohimo kang Dirk nga taas ug intellect.
         public Dirk()
         {
-            super("Dirk", baseHP, baseMP, baseDEF, baseATK, baseWIS, 100, new Skill.InfoDump(), new Skill.HardHats());
+            super("Dirk", baseHP, baseMP, baseDEF, baseATK, baseWIS, 100, 31, 47,
+                    new Skill.InfoDump(), new Skill.HardHats());
         }
     }
 
@@ -127,7 +152,8 @@ public abstract class Character
         // Kini nga constructor mohimo kang Brad nga taas ug wisdom.
         public Brad()
         {
-            super("Brad", baseHP, baseMP, baseDEF, baseATK, 100, baseINT, new Skill.PresidentBook(), new Skill.ExistentialCrisis());
+            super("Brad", baseHP, baseMP, baseDEF, baseATK, 100, baseINT, 35, 50,
+                    new Skill.PresidentBook(), new Skill.ExistentialCrisis());
         }
     }
 
@@ -136,7 +162,8 @@ public abstract class Character
         // Kini nga constructor mohimo sa first enemy: Homework Monster.
         public HomeworkMonster()
         {
-            super("Homework_Monster", 200, 50, 40, 50, 50, 50, new Skill.CellPhone(), new Skill.InfoDump());
+            super("Homework_Monster", 200, 50, 40, 50, 50, 50, 24, 36,
+                    new Skill.CellPhone(), new Skill.InfoDump());
         }
     }
 
@@ -145,7 +172,8 @@ public abstract class Character
         // Kini nga constructor mohimo sa second enemy: Midterm Monster.
         public MidtermMonster()
         {
-            super("Midterm_Monster", 400,50,40,60,50,50, new Skill.CellPhone(), new Skill.InfoDump());
+            super("Midterm_Monster", 400,50,40,60,50,50, 32, 46,
+                    new Skill.CellPhone(), new Skill.InfoDump());
         }
     }
 
@@ -154,7 +182,8 @@ public abstract class Character
         // Kini nga constructor mohimo sa final enemy: Finals Monster.
         public Finals_Monster()
         {
-            super("Finals_Monster", 600, 50, 50,70,60,60, new Skill.CellPhone(), new Skill.InfoDump());
+            super("Finals_Monster", 600, 50, 50,70,60,60, 40, 55,
+                    new Skill.CellPhone(), new Skill.InfoDump());
         }
     }
 
