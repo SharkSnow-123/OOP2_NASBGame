@@ -14,7 +14,7 @@ public class NextBattlePanel extends JPanel implements ActionListener {
     private final java.util.List<Integer> starSpeeds = new java.util.ArrayList<>();
 
     private JButton proceedButton;
-    private JButton quitButton;
+    private JButton mainMenuButton;
 
     public NextBattlePanel(JFrame frame) {
         this.frame = frame;
@@ -32,17 +32,14 @@ public class NextBattlePanel extends JPanel implements ActionListener {
             frame.repaint();
         });
 
-        quitButton = createButton("QUIT GAME");
-        quitButton.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to quit?",
-                    "Confirm Quit", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
+        mainMenuButton = createButton("MAIN MENU");
+        mainMenuButton.addActionListener(e -> {
+            starTimer.stop();
+            GameNavigator.showStartPage(frame);
         });
 
         add(proceedButton);
-        add(quitButton);
+        add(mainMenuButton);
 
         starTimer = new Timer(50, this);
         starTimer.start();
@@ -129,6 +126,6 @@ public class NextBattlePanel extends JPanel implements ActionListener {
         int x = (w - buttonWidth) / 2;
 
         proceedButton.setLocation(x, startY);
-        quitButton.setLocation(x, startY + buttonHeight + spacing);
+        mainMenuButton.setLocation(x, startY + buttonHeight + spacing);
     }
 }

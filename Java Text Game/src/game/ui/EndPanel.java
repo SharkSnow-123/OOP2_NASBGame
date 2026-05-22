@@ -13,7 +13,7 @@ public class EndPanel extends JPanel implements ActionListener {
     private Timer delayTimer;
     private final java.util.List<Point> stars = new java.util.ArrayList<>();
     private final java.util.List<Integer> starSpeeds = new java.util.ArrayList<>();
-    private JButton quitButton;
+    private JButton mainMenuButton;
     private JButton playAgainButton;
 
     public EndPanel (JFrame frame) {
@@ -25,9 +25,12 @@ public class EndPanel extends JPanel implements ActionListener {
         add(playAgainButton);
         playAgainButton.addActionListener(e -> playAgain());
 
-        quitButton = createButton("QUIT");
-        add(quitButton);
-        quitButton.addActionListener(e->System.exit(0));
+        mainMenuButton = createButton("MAIN MENU");
+        add(mainMenuButton);
+        mainMenuButton.addActionListener(e -> {
+            starTimer.stop();
+            GameNavigator.showStartPage(frame);
+        });
 
         generateStars(150);
 
@@ -96,7 +99,7 @@ public class EndPanel extends JPanel implements ActionListener {
         int buttonHeight = 60;
         int x = (w - buttonWidth) / 2;
         playAgainButton.setLocation(x, h / 2 + 50);
-        quitButton.setLocation(x, h / 2 + 130);
+        mainMenuButton.setLocation(x, h / 2 + 130);
 
     }
     @Override

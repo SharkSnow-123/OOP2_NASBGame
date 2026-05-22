@@ -17,4 +17,9 @@ final class GameNavigator {
     static void showCharacterSelection(JFrame frame) {
         show(frame, new BattlePanel(frame));
     }
+
+    static void showStartPage(JFrame frame) {
+        GUI gui = new GUI();
+        show(frame, gui.new TitlePanel(frame));
+    }
 }
