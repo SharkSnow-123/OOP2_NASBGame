@@ -3,6 +3,7 @@ package game.ui;
 import javax.swing.ImageIcon;
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 final class ImageAssets {
     // Private constructor para dili mahimo nga object ang helper class.
@@ -16,7 +17,23 @@ final class ImageAssets {
             return new ImageIcon(resource);
         }
 
-        File imageFile = new File("images", fileName);
-        return new ImageIcon(imageFile.getPath());
+        for (File imageFile : possibleImageFiles(fileName)) {
+            if (imageFile.exists()) {
+                return new ImageIcon(imageFile.getAbsolutePath());
+            }
+        }
+
+        System.err.println("Image not found: " + fileName);
+        return new ImageIcon();
+    }
+
+    // Kini nga function mangita sa possible paths kay lahi-lahi ug working directory ang VS Code.
+    private static List<File> possibleImageFiles(String fileName) {
+        return List.of(
+                new File("images", fileName),
+                new File("Java Text Game/images", fileName),
+                new File(System.getProperty("user.dir"), "images/" + fileName),
+                new File(System.getProperty("user.dir"), "Java Text Game/images/" + fileName)
+        );
     }
 }
