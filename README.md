@@ -39,31 +39,5 @@ The main entry point is:
 Java Text Game/src/game/ui/GUI.java
 ```
 
-## Requirements
 
-- Java Development Kit (JDK) 17 or newer
-- IntelliJ IDEA or another Java IDE, optional
 
-## Run in IntelliJ IDEA
-
-1. Open the `Java Text Game` folder as the project.
-2. Make sure the `src` folder is marked as a source root.
-3. Run `game.ui.GUI`.
-
-## Run from the Command Line
-
-From the repository root:
-
-```powershell
-cd "Java Text Game"
-mkdir build\classes
-javac -d build\classes (Get-ChildItem -Recurse -Filter *.java -Path src).FullName
-Copy-Item -Recurse images build\classes\images
-java -cp build\classes game.ui.GUI
-```
-
-## Notes
-
-- The game uses local image files from the `images` folder.
-- Build output is ignored through `.gitignore`.
-- The current project is a desktop app, so it runs in a Java window rather than in the browser.

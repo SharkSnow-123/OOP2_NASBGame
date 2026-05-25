@@ -186,7 +186,7 @@ public class GUI {
                 frame.repaint();
                 loadingPanel.startLoading();
             });
-            //SEAN IKAW LAN BAHALA SUMPAY ARI SA GAMEE SA START BUTTON 🙂
+            //BRIAR IKAW LAN BAHALA SUMPAY ARI SA GAMEE SA START BUTTON 🙂
             howToPlayButton.addActionListener(e -> goToHowToPlayPage());
             quitButton.addActionListener(e -> System.exit(0));
 
